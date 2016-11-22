@@ -16,7 +16,7 @@ struct Constants {
 
 class ViewController: NSViewController {
     
-    let dinoView: DinoView = DinoView()
+    let dinoView: NSView = NSView()
     let dinoSKView = DinoView()
     let simpleTextField: NSTextField = NSTextField(labelWithString: "")
     let mainTapReceiverButton = NSButton(title: " ", target: self, action: #selector(tap))
@@ -31,6 +31,7 @@ class ViewController: NSViewController {
     
     func tap() {
         print("TAPPED")
+        dinoSKView.dinoScene.jump()
     }
     
     func setupDinoView() {
@@ -41,7 +42,6 @@ class ViewController: NSViewController {
         dinoView.layer?.backgroundColor = Constants.backgroundColor.cgColor
         
         dinoView.addSubview(simpleTextField)
-        dinoView.addSubview(mainTapReceiverButton)
         
         
         
@@ -59,6 +59,9 @@ class ViewController: NSViewController {
         dinoSKView.showsFPS = true
         dinoSKView.showsDrawCount = true
         dinoSKView.initScene()
+        
+        
+        dinoView.addSubview(mainTapReceiverButton)
     }
     
     func setupDinoViewOnAppear() {
