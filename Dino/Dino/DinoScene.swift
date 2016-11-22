@@ -21,12 +21,16 @@ struct PhysicsCategory {
 class DinoScene: SKScene, SKPhysicsContactDelegate {
     
     var sceneCreated = false
+    var gameStarted = false
     var canJump = false // only allow jumping when hit ground
-    var continueSpawnObstacle = true
+    var continueSpawnObstacle = false
     
     let dinoDarkColor = SKColor(red: 83/255.0, green: 83/255.0, blue: 83/255.0, alpha: 1)
     let dinoSpriteNode = SKSpriteNode(imageNamed: "DinoSprite")
     let bottomCollider: SKPhysicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y:0), to: CGPoint(x:1005, y:0))
+    
+    let titleNode = SKLabelNode(fontNamed: "Courier")
+    let subtitleNode = SKLabelNode(fontNamed: "Courier")
     
     override func didMove(to view: SKView) {
         print("c")
@@ -44,27 +48,66 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
         })
     }
     
+    func startGame() {
+        srand48(Int(arc4random()))
+        
+        for node in self.children {
+            if (node.physicsBody?.categoryBitMask == PhysicsCategory.Obstacle) {
+                self.removeChildren(in: [node])
+            }
+        }
+        
+        gameStarted = true
+        canJump = true
+        titleNode.isHidden = true
+        subtitleNode.isHidden = true
+        self.continueSpawnObstacle = true
+        self.spawnObstacle()
+    }
+    
+    func endGame() {
+        
+        titleNode.isHidden = false
+        subtitleNode.isHidden = false
+        
+        canJump = false
+        continueSpawnObstacle = false
+        gameStarted = false
+        for node in self.children {
+            if (node.physicsBody?.categoryBitMask == PhysicsCategory.Obstacle) {
+                node.physicsBody?.velocity = CGVector(dx:0, dy:0)
+            }
+        }
+    }
+    
     func jump() {
-        print("a")
+        
+        if !gameStarted {
+            startGame()
+        }
+        
         if !canJump {
             return
         }
-        print("b")
+        
         //dinoSpriteNode.physicsBody?.applyImpulse(CGVector(dx: 0, dy:10), at: dinoSpriteNode.position)
         if let pb = dinoSpriteNode.physicsBody {
-            print("c")
             pb.applyImpulse(CGVector(dx:0, dy:8.8), at: dinoSpriteNode.position)
         }
     }
     
     func spawnObstacle() {
-        let x = arc4random() % 2;
+        if self.continueSpawnObstacle == false {
+            return
+        }
         
-        if x==0 {
+        let x = arc4random() % 3;
+        
+        if x != 2 {
             // Create
             let ob = SKSpriteNode(imageNamed: "Obstacle")
-            ob.position = CGPoint(x: 900, y: 12)
-            ob.setScale(0.38)
+            ob.setScale(CGFloat(drand48() * 0.2 + 0.3))
+            ob.position = CGPoint(x: 900, y: ob.size.height/2)
             ob.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "Obstacle"), size: ob.size)
             if let pb = ob.physicsBody {
                 pb.isDynamic = true
@@ -77,7 +120,7 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
                 pb.friction = 0
                 pb.linearDamping = 0
                 pb.angularDamping = 0
-                pb.velocity = CGVector(dx: -140, dy: 0)
+                pb.velocity = CGVector(dx: -160, dy: 0)
             }
             self.addChild(ob)
             
@@ -89,9 +132,10 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
+        let randDelay = drand48() * 0.3
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            if self.continueSpawnObstacle {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 + randDelay, execute: {
+            if self.continueSpawnObstacle == true {
                 self.spawnObstacle()
             }
         })
@@ -99,6 +143,7 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
     
     func createSceneContents() {
         self.addChild(titleLabel())
+        self.addChild(subtitleLabel())
         self.addChild(dinoSprite())
         self.physicsWorld.contactDelegate = self
         self.backgroundColor = SKColor.lightGray
@@ -122,15 +167,23 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func titleLabel() -> SKLabelNode {
-        let titleNode = SKLabelNode(fontNamed: "Courier")
         titleNode.text = "TouchBarDino"
-        titleNode.fontSize = 13
-        titleNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 4)
+        titleNode.fontSize = 10
+        titleNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         titleNode.fontColor = dinoDarkColor
-        
-        
+        titleNode.zPosition = 50
         
         return titleNode
+    }
+    
+    func subtitleLabel() -> SKLabelNode {
+        subtitleNode.text = "Touch anywhere to begin..."
+        subtitleNode.fontSize = 7
+        subtitleNode.position = CGPoint(x: self.frame.midX, y: self.frame.midY-10)
+        subtitleNode.fontColor = dinoDarkColor
+        subtitleNode.zPosition = 50
+
+        return subtitleNode
     }
     
     func dinoSprite() -> SKSpriteNode {
@@ -158,7 +211,6 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        print("begin")
         if (contact.bodyA == dinoSpriteNode.physicsBody && contact.bodyB == bottomCollider) ||
             (contact.bodyB == dinoSpriteNode.physicsBody && contact.bodyA == bottomCollider) {
             canJump = true
@@ -166,20 +218,11 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
-        print("end")
         if (contact.bodyA == dinoSpriteNode.physicsBody && contact.bodyB == bottomCollider) ||
             (contact.bodyB == dinoSpriteNode.physicsBody && contact.bodyA == bottomCollider) {
             canJump = false
         } else {
-            // Must have hit an obstacle
-            print("HIT")
-            canJump = false
-            continueSpawnObstacle = false
-            for node in self.children {
-                if (node.physicsBody?.categoryBitMask == PhysicsCategory.Obstacle) {
-                    node.physicsBody?.velocity = CGVector(dx:0, dy:0)
-                }
-            }
+            endGame()
         }
     }
     
