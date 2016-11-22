@@ -14,7 +14,9 @@
 		186582D61DE3B86E000BDDD7 /* DinoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186582D51DE3B86E000BDDD7 /* DinoTests.swift */; };
 		186582E11DE3B86E000BDDD7 /* DinoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186582E01DE3B86E000BDDD7 /* DinoUITests.swift */; };
 		186582EF1DE3BC00000BDDD7 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186582EE1DE3BC00000BDDD7 /* WindowController.swift */; };
-		186582F11DE3BD1D000BDDD7 /* DinoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186582F01DE3BD1D000BDDD7 /* DinoView.swift */; };
+		186582F41DE4A9FC000BDDD7 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186582F31DE4A9FC000BDDD7 /* SpriteKit.framework */; };
+		186582F61DE4C4B1000BDDD7 /* DinoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186582F51DE4C4B1000BDDD7 /* DinoScene.swift */; };
+		186582F81DE4C616000BDDD7 /* DinoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186582F71DE4C616000BDDD7 /* DinoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +50,9 @@
 		186582E01DE3B86E000BDDD7 /* DinoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DinoUITests.swift; sourceTree = "<group>"; };
 		186582E21DE3B86E000BDDD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		186582EE1DE3BC00000BDDD7 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
-		186582F01DE3BD1D000BDDD7 /* DinoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinoView.swift; sourceTree = "<group>"; };
+		186582F31DE4A9FC000BDDD7 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		186582F51DE4C4B1000BDDD7 /* DinoScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinoScene.swift; sourceTree = "<group>"; };
+		186582F71DE4C616000BDDD7 /* DinoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				186582F41DE4A9FC000BDDD7 /* SpriteKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +88,7 @@
 				186582D41DE3B86E000BDDD7 /* DinoTests */,
 				186582DF1DE3B86E000BDDD7 /* DinoUITests */,
 				186582C11DE3B86D000BDDD7 /* Products */,
+				186582F21DE4A9FC000BDDD7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,7 +107,8 @@
 			children = (
 				186582C31DE3B86D000BDDD7 /* AppDelegate.swift */,
 				186582C51DE3B86D000BDDD7 /* ViewController.swift */,
-				186582F01DE3BD1D000BDDD7 /* DinoView.swift */,
+				186582F71DE4C616000BDDD7 /* DinoView.swift */,
+				186582F51DE4C4B1000BDDD7 /* DinoScene.swift */,
 				186582C71DE3B86D000BDDD7 /* Assets.xcassets */,
 				186582C91DE3B86E000BDDD7 /* Main.storyboard */,
 				186582CC1DE3B86E000BDDD7 /* Info.plist */,
@@ -126,6 +133,14 @@
 				186582E21DE3B86E000BDDD7 /* Info.plist */,
 			);
 			path = DinoUITests;
+			sourceTree = "<group>";
+		};
+		186582F21DE4A9FC000BDDD7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				186582F31DE4A9FC000BDDD7 /* SpriteKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,10 +279,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				186582F81DE4C616000BDDD7 /* DinoView.swift in Sources */,
 				186582C61DE3B86D000BDDD7 /* ViewController.swift in Sources */,
 				186582EF1DE3BC00000BDDD7 /* WindowController.swift in Sources */,
-				186582F11DE3BD1D000BDDD7 /* DinoView.swift in Sources */,
 				186582C41DE3B86D000BDDD7 /* AppDelegate.swift in Sources */,
+				186582F61DE4C4B1000BDDD7 /* DinoScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +529,7 @@
 				186582E71DE3B86E000BDDD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		186582E81DE3B86E000BDDD7 /* Build configuration list for PBXNativeTarget "DinoTests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +538,7 @@
 				186582EA1DE3B86E000BDDD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		186582EB1DE3B86E000BDDD7 /* Build configuration list for PBXNativeTarget "DinoUITests" */ = {
 			isa = XCConfigurationList;
@@ -529,6 +547,7 @@
 				186582ED1DE3B86E000BDDD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

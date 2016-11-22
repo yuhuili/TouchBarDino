@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SpriteKit
 
 struct Constants {
     static let backgroundColor = NSColor(red: 247/255.0, green: 247/255.0, blue: 247/255.0, alpha: 1)
@@ -16,7 +17,8 @@ struct Constants {
 class ViewController: NSViewController {
     
     let dinoView: DinoView = DinoView()
-    let simpleTextField: NSTextField = NSTextField(labelWithString: "JAY IS SMART")
+    let dinoSKView = DinoView()
+    let simpleTextField: NSTextField = NSTextField(labelWithString: "")
     let mainTapReceiverButton = NSButton(title: " ", target: self, action: #selector(tap))
     
     override func viewDidLoad() {
@@ -25,7 +27,6 @@ class ViewController: NSViewController {
         // Do any additional setup after loading the view.
         setupDinoView()
         setupMainTapReceiverButton()
-        setupDino()
     }
     
     func tap() {
@@ -41,6 +42,23 @@ class ViewController: NSViewController {
         
         dinoView.addSubview(simpleTextField)
         dinoView.addSubview(mainTapReceiverButton)
+        
+        
+        
+        dinoSKView.translatesAutoresizingMaskIntoConstraints = false
+        dinoView.addSubview(dinoSKView)
+        let c5 = NSLayoutConstraint(item: dinoSKView, attribute: .leading, relatedBy: .equal, toItem: dinoView, attribute: .leading, multiplier: 1.0, constant: 0)
+        let c6 = NSLayoutConstraint(item: dinoSKView, attribute: .trailing, relatedBy: .equal, toItem: dinoView, attribute: .trailing, multiplier: 1.0, constant: 0)
+        let c7 = NSLayoutConstraint(item: dinoSKView, attribute: .top, relatedBy: .equal, toItem: dinoView, attribute: .top, multiplier: 1.0, constant: 0)
+        let c8 = NSLayoutConstraint(item: dinoSKView, attribute: .bottom, relatedBy: .equal, toItem: dinoView, attribute: .bottom, multiplier: 1.0, constant: 0)
+        
+        dinoView.addConstraint(c5)
+        dinoView.addConstraint(c6)
+        dinoView.addConstraint(c7)
+        dinoView.addConstraint(c8)
+        dinoSKView.showsFPS = true
+        dinoSKView.showsDrawCount = true
+        dinoSKView.initScene()
     }
     
     func setupDinoViewOnAppear() {
@@ -56,6 +74,9 @@ class ViewController: NSViewController {
             touchBarView.addConstraint(c2)
             touchBarView.addConstraint(c3)
             touchBarView.addConstraint(c4)
+            
+            //dinoView.setupDinoScene()
+            
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                 self.setupDinoView()
@@ -77,7 +98,6 @@ class ViewController: NSViewController {
         dinoView.addConstraint(c3)
         dinoView.addConstraint(c4)
     }
-    
 
     override var representedObject: Any? {
         didSet {
