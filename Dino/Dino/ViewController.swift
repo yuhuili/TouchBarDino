@@ -30,7 +30,6 @@ class ViewController: NSViewController {
     }
     
     func tap() {
-        print("TAPPED")
         dinoSKView.dinoScene.jump()
     }
     
