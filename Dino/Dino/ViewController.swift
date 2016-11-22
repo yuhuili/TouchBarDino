@@ -8,10 +8,12 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+struct Constants {
+    static let backgroundColor = NSColor(red: 247/255.0, green: 247/255.0, blue: 247/255.0, alpha: 1)
+    static let touchBarWidth:CGFloat = 1005.0
+}
 
-    let backgroundColor = NSColor(red: 247/255.0, green: 247/255.0, blue: 247/255.0, alpha: 1)
-    let touchBarWidth:CGFloat = 1005.0
+class ViewController: NSViewController {
     
     let dinoView: DinoView = DinoView()
     let simpleTextField: NSTextField = NSTextField(labelWithString: "JAY IS SMART")
@@ -23,6 +25,7 @@ class ViewController: NSViewController {
         // Do any additional setup after loading the view.
         setupDinoView()
         setupMainTapReceiverButton()
+        setupDino()
     }
     
     func tap() {
@@ -30,11 +33,11 @@ class ViewController: NSViewController {
     }
     
     func setupDinoView() {
-        let c1 = NSLayoutConstraint(item: dinoView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: touchBarWidth)
+        let c1 = NSLayoutConstraint(item: dinoView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: Constants.touchBarWidth)
         dinoView.addConstraint(c1)
         
         dinoView.wantsLayer = true
-        dinoView.layer?.backgroundColor = backgroundColor.cgColor
+        dinoView.layer?.backgroundColor = Constants.backgroundColor.cgColor
         
         dinoView.addSubview(simpleTextField)
         dinoView.addSubview(mainTapReceiverButton)
@@ -74,6 +77,7 @@ class ViewController: NSViewController {
         dinoView.addConstraint(c3)
         dinoView.addConstraint(c4)
     }
+    
 
     override var representedObject: Any? {
         didSet {
