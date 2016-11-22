@@ -24,6 +24,7 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
     var gameStarted = false
     var canJump = false // only allow jumping when hit ground
     var continueSpawnObstacle = false
+    var shouldUpdateScore = true
     
     let dinoDarkColor = SKColor(red: 83/255.0, green: 83/255.0, blue: 83/255.0, alpha: 1)
     let dinoSpriteNode = SKSpriteNode(imageNamed: "DinoSprite")
@@ -31,6 +32,9 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
     
     let titleNode = SKLabelNode(fontNamed: "Courier")
     let subtitleNode = SKLabelNode(fontNamed: "Courier")
+    let scoreNode = SKLabelNode(fontNamed: "Courier")
+    
+    var currentScore = 0
     
     override func didMove(to view: SKView) {
         print("c")
@@ -48,6 +52,17 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
         })
     }
     
+    func updateScore() {
+        currentScore += 1
+        scoreNode.text = generateScore()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            if (self.shouldUpdateScore) {
+                self.updateScore()
+            }
+        })
+    }
+    
     func startGame() {
         srand48(Int(arc4random()))
         
@@ -59,6 +74,9 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
         
         gameStarted = true
         canJump = true
+        currentScore = 0
+        shouldUpdateScore = true
+        updateScore()
         titleNode.isHidden = true
         subtitleNode.isHidden = true
         self.continueSpawnObstacle = true
@@ -73,6 +91,7 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
         canJump = false
         continueSpawnObstacle = false
         gameStarted = false
+        shouldUpdateScore = false
         for node in self.children {
             if (node.physicsBody?.categoryBitMask == PhysicsCategory.Obstacle) {
                 node.physicsBody?.velocity = CGVector(dx:0, dy:0)
@@ -132,7 +151,7 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-        let randDelay = drand48() * 0.3
+        let randDelay = drand48() * 0.3 - Double(currentScore) / 1000.0
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6 + randDelay, execute: {
             if self.continueSpawnObstacle == true {
@@ -145,6 +164,7 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(titleLabel())
         self.addChild(subtitleLabel())
         self.addChild(dinoSprite())
+        self.addChild(scoreLabel())
         self.physicsWorld.contactDelegate = self
         self.backgroundColor = SKColor.lightGray
         //self.scaleMode = .aspectFit
@@ -184,6 +204,21 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
         subtitleNode.zPosition = 50
 
         return subtitleNode
+    }
+    
+    func scoreLabel() -> SKLabelNode {
+        scoreNode.text = generateScore()
+        scoreNode.fontSize = 13
+        scoreNode.horizontalAlignmentMode = .right
+        scoreNode.position = CGPoint(x: self.frame.maxX - 4, y:self.frame.midY + 2)
+        scoreNode.fontColor = dinoDarkColor
+        scoreNode.zPosition = 80
+        
+        return scoreNode
+    }
+    
+    func generateScore() -> String {
+        return String(format: "%07d", currentScore)
     }
     
     func dinoSprite() -> SKSpriteNode {
