@@ -106,13 +106,13 @@
 			isa = PBXGroup;
 			children = (
 				186582C31DE3B86D000BDDD7 /* AppDelegate.swift */,
+				186582EE1DE3BC00000BDDD7 /* WindowController.swift */,
 				186582C51DE3B86D000BDDD7 /* ViewController.swift */,
 				186582F71DE4C616000BDDD7 /* DinoView.swift */,
 				186582F51DE4C4B1000BDDD7 /* DinoScene.swift */,
 				186582C71DE3B86D000BDDD7 /* Assets.xcassets */,
 				186582C91DE3B86E000BDDD7 /* Main.storyboard */,
 				186582CC1DE3B86E000BDDD7 /* Info.plist */,
-				186582EE1DE3BC00000BDDD7 /* WindowController.swift */,
 			);
 			path = Dino;
 			sourceTree = "<group>";
