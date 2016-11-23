@@ -184,7 +184,7 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
         if x != 2 {
             let ob = SKSpriteNode(imageNamed: "Obstacle")
             ob.setScale(CGFloat(drand48() * 0.2 + 0.3))
-            ob.position = CGPoint(x: 900, y: ob.size.height/2)
+            ob.position = CGPoint(x: 1020, y: ob.size.height/2)
             ob.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "Obstacle"), size: ob.size)
             if let pb = ob.physicsBody {
                 pb.isDynamic = true
@@ -201,7 +201,7 @@ class DinoScene: SKScene, SKPhysicsContactDelegate {
             }
             self.addChild(ob)
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 12.0, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 14.0, execute: {
                 if self.shouldSpawnObstacle {
                     self.removeChildren(in: [ob])
                 }
