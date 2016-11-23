@@ -10,15 +10,14 @@ import Cocoa
 import SpriteKit
 
 struct Constants {
-    static let backgroundColor = NSColor(red: 247/255.0, green: 247/255.0, blue: 247/255.0, alpha: 1)
     static let touchBarWidth:CGFloat = 1005.0
+    static let backgroundColor = NSColor(red: 247/255.0, green: 247/255.0, blue: 247/255.0, alpha: 1)
 }
 
 class ViewController: NSViewController {
     
     let dinoView: NSView = NSView()
     let dinoSKView = DinoView()
-    let simpleTextField: NSTextField = NSTextField(labelWithString: "")
     let mainTapReceiverButton = NSButton(title: " ", target: self, action: #selector(tap))
     
     override func viewDidLoad() {
@@ -34,32 +33,28 @@ class ViewController: NSViewController {
     }
     
     func setupDinoView() {
+        
+        // Fix width
+        dinoSKView.translatesAutoresizingMaskIntoConstraints = false
         let c1 = NSLayoutConstraint(item: dinoView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: Constants.touchBarWidth)
+        // Constraints to sides
+        let c2 = NSLayoutConstraint(item: dinoSKView, attribute: .leading, relatedBy: .equal, toItem: dinoView, attribute: .leading, multiplier: 1.0, constant: 0)
+        let c3 = NSLayoutConstraint(item: dinoSKView, attribute: .trailing, relatedBy: .equal, toItem: dinoView, attribute: .trailing, multiplier: 1.0, constant: 0)
+        let c4 = NSLayoutConstraint(item: dinoSKView, attribute: .top, relatedBy: .equal, toItem: dinoView, attribute: .top, multiplier: 1.0, constant: 0)
+        let c5 = NSLayoutConstraint(item: dinoSKView, attribute: .bottom, relatedBy: .equal, toItem: dinoView, attribute: .bottom, multiplier: 1.0, constant: 0)
+        
         dinoView.addConstraint(c1)
+        dinoView.addConstraint(c2)
+        dinoView.addConstraint(c3)
+        dinoView.addConstraint(c4)
+        dinoView.addConstraint(c5)
         
         dinoView.wantsLayer = true
         dinoView.layer?.backgroundColor = Constants.backgroundColor.cgColor
-        
-        dinoView.addSubview(simpleTextField)
-        
-        
-        
-        dinoSKView.translatesAutoresizingMaskIntoConstraints = false
-        dinoView.addSubview(dinoSKView)
-        let c5 = NSLayoutConstraint(item: dinoSKView, attribute: .leading, relatedBy: .equal, toItem: dinoView, attribute: .leading, multiplier: 1.0, constant: 0)
-        let c6 = NSLayoutConstraint(item: dinoSKView, attribute: .trailing, relatedBy: .equal, toItem: dinoView, attribute: .trailing, multiplier: 1.0, constant: 0)
-        let c7 = NSLayoutConstraint(item: dinoSKView, attribute: .top, relatedBy: .equal, toItem: dinoView, attribute: .top, multiplier: 1.0, constant: 0)
-        let c8 = NSLayoutConstraint(item: dinoSKView, attribute: .bottom, relatedBy: .equal, toItem: dinoView, attribute: .bottom, multiplier: 1.0, constant: 0)
-        
-        dinoView.addConstraint(c5)
-        dinoView.addConstraint(c6)
-        dinoView.addConstraint(c7)
-        dinoView.addConstraint(c8)
-        dinoSKView.showsFPS = false
-        dinoSKView.showsDrawCount = false
+
         dinoSKView.initScene()
         
-        
+        dinoView.addSubview(dinoSKView)
         dinoView.addSubview(mainTapReceiverButton)
     }
     
@@ -67,6 +62,7 @@ class ViewController: NSViewController {
         
         if let touchBarView = dinoView.superview {
             
+            // Constraints to sides
             let c1 = NSLayoutConstraint(item: dinoView, attribute: .leading, relatedBy: .equal, toItem: touchBarView, attribute: .leading, multiplier: 1.0, constant: 0)
             let c2 = NSLayoutConstraint(item: dinoView, attribute: .trailing, relatedBy: .equal, toItem: touchBarView, attribute: .trailing, multiplier: 1.0, constant: 0)
             let c3 = NSLayoutConstraint(item: dinoView, attribute: .top, relatedBy: .equal, toItem: touchBarView, attribute: .top, multiplier: 1.0, constant: 0)
@@ -76,8 +72,6 @@ class ViewController: NSViewController {
             touchBarView.addConstraint(c2)
             touchBarView.addConstraint(c3)
             touchBarView.addConstraint(c4)
-            
-            //dinoView.setupDinoScene()
             
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
@@ -90,6 +84,7 @@ class ViewController: NSViewController {
         mainTapReceiverButton.isTransparent = true
         mainTapReceiverButton.translatesAutoresizingMaskIntoConstraints = false
         
+        // Constraints to sides
         let c1 = NSLayoutConstraint(item: mainTapReceiverButton, attribute: .leading, relatedBy: .equal, toItem: dinoView, attribute: .leading, multiplier: 1.0, constant: 0)
         let c2 = NSLayoutConstraint(item: mainTapReceiverButton, attribute: .trailing, relatedBy: .equal, toItem: dinoView, attribute: .trailing, multiplier: 1.0, constant: 0)
         let c3 = NSLayoutConstraint(item: mainTapReceiverButton, attribute: .top, relatedBy: .equal, toItem: dinoView, attribute: .top, multiplier: 1.0, constant: 0)
