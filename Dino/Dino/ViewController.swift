@@ -55,8 +55,8 @@ class ViewController: NSViewController {
         dinoView.addConstraint(c6)
         dinoView.addConstraint(c7)
         dinoView.addConstraint(c8)
-        dinoSKView.showsFPS = true
-        dinoSKView.showsDrawCount = true
+        dinoSKView.showsFPS = false
+        dinoSKView.showsDrawCount = false
         dinoSKView.initScene()
         
         
