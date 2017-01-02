@@ -104,7 +104,7 @@ class ViewController: NSViewController {
 
 }
 
-@available(OSX 10.12.1, *)
+@available(OSX 10.12.2, *)
 extension ViewController: NSTouchBarDelegate {
     override func makeTouchBar() -> NSTouchBar? {
         let touchBar = NSTouchBar()
