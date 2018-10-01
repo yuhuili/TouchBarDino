@@ -43,11 +43,7 @@ class ViewController: NSViewController {
         let c4 = NSLayoutConstraint(item: dinoSKView, attribute: .top, relatedBy: .equal, toItem: dinoView, attribute: .top, multiplier: 1.0, constant: 0)
         let c5 = NSLayoutConstraint(item: dinoSKView, attribute: .bottom, relatedBy: .equal, toItem: dinoView, attribute: .bottom, multiplier: 1.0, constant: 0)
         
-        dinoView.addConstraint(c1)
-        dinoView.addConstraint(c2)
-        dinoView.addConstraint(c3)
-        dinoView.addConstraint(c4)
-        dinoView.addConstraint(c5)
+        dinoView.addConstraints([c1, c2, c3, c4, c5])
         
         dinoView.wantsLayer = true
         dinoView.layer?.backgroundColor = Constants.backgroundColor.cgColor
@@ -68,10 +64,7 @@ class ViewController: NSViewController {
             let c3 = NSLayoutConstraint(item: dinoView, attribute: .top, relatedBy: .equal, toItem: touchBarView, attribute: .top, multiplier: 1.0, constant: 0)
             let c4 = NSLayoutConstraint(item: dinoView, attribute: .bottom, relatedBy: .equal, toItem: touchBarView, attribute: .bottom, multiplier: 1.0, constant: 0)
             
-            touchBarView.addConstraint(c1)
-            touchBarView.addConstraint(c2)
-            touchBarView.addConstraint(c3)
-            touchBarView.addConstraint(c4)
+            touchBarView.addConstraints([c1, c2, c3, c4])
             
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
@@ -90,10 +83,7 @@ class ViewController: NSViewController {
         let c3 = NSLayoutConstraint(item: mainTapReceiverButton, attribute: .top, relatedBy: .equal, toItem: dinoView, attribute: .top, multiplier: 1.0, constant: 0)
         let c4 = NSLayoutConstraint(item: mainTapReceiverButton, attribute: .bottom, relatedBy: .equal, toItem: dinoView, attribute: .bottom, multiplier: 1.0, constant: 0)
         
-        dinoView.addConstraint(c1)
-        dinoView.addConstraint(c2)
-        dinoView.addConstraint(c3)
-        dinoView.addConstraint(c4)
+        dinoView.addConstraints([c1, c2, c3, c4])
     }
 
     override var representedObject: Any? {
