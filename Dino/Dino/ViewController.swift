@@ -28,7 +28,7 @@ class ViewController: NSViewController {
         setupMainTapReceiverButton()
     }
     
-    func tap() {
+    @objc func tap() {
         dinoSKView.dinoScene.jump()
     }
     
@@ -105,9 +105,9 @@ extension ViewController: NSTouchBarDelegate {
         return touchBar
     }
     
-    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         switch identifier {
-        case NSTouchBarItemIdentifier.dinoItem:
+        case NSTouchBarItem.Identifier.dinoItem:
             let customViewItem = NSCustomTouchBarItem(identifier: identifier)
             customViewItem.view = dinoView
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
@@ -121,12 +121,14 @@ extension ViewController: NSTouchBarDelegate {
     }
 }
 
-extension NSTouchBarCustomizationIdentifier {
-    static let dinoBar = NSTouchBarCustomizationIdentifier("com.yuhuili.Dino.DinoBar")
+@available(OSX 10.12.2, *)
+extension NSTouchBar.CustomizationIdentifier {
+    static let dinoBar = "com.yuhuili.Dino.DinoBar"
 }
 
-extension NSTouchBarItemIdentifier {
-    static let dinoItem = NSTouchBarItemIdentifier("com.yuhuili.Dino.DinoBar.main")
+@available(OSX 10.12.2, *)
+extension NSTouchBarItem.Identifier {
+    static let dinoItem = NSTouchBarItem.Identifier("com.yuhuili.Dino.DinoBar.main")
 }
 
 
